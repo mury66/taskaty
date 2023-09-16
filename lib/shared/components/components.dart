@@ -49,11 +49,11 @@ Widget defaultinputform({
 Widget buildTaskItem(Map model, context) => Dismissible(
     key: Key(model["id"].toString()),
     background: Container(
-      color: Colors.green,
+      color: Colors.red,
       child: const Padding(
-        padding: EdgeInsets.fromLTRB(45, 35, 0, 0),
+        padding: EdgeInsets.fromLTRB(320, 35, 0, 0),
         child: Text(
-          "mark as done",
+          "delete",
           style: TextStyle(
               fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -71,14 +71,7 @@ Widget buildTaskItem(Map model, context) => Dismissible(
       ),
     ),
     onDismissed: (direction) {
-      if (direction == DismissDirection.endToStart) 
-      {
         AppCubit.get(context).deleteData(id: model["id"]);
-      }
-      else if(direction == DismissDirection.startToEnd)
-      {
-        AppCubit.get(context).updateData(status: "done", id: model["id"]);
-      }
     },
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -113,15 +106,22 @@ Widget buildTaskItem(Map model, context) => Dismissible(
               ],
             ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
           IconButton(
               onPressed: () {
                 AppCubit.get(context)
                     .updateData(status: "archived", id: model["id"]);
               },
               icon: const Icon(Icons.archive_outlined),
+              color: const Color.fromARGB(121, 197, 197, 197)),
+          const SizedBox(
+            width: 5,
+          ),
+          IconButton(
+              onPressed: () {
+                AppCubit.get(context)
+                    .updateData(status: "done", id: model["id"]);
+              },
+              icon: const Icon(Icons.check_box_outlined),
               color: const Color.fromARGB(121, 197, 197, 197)),
         ],
       ),
